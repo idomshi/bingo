@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ビンゴ</title>
+  <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.js"></script>
+  <style>
+    body, p {
+        margin: 0;
+    }
+    #container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+    }
+
+    #number {
+        width: 62%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #table {
+        box-sizing: border-box;
+        width: 38%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        background-color: rgb(144, 181, 194);
+    }
+    
+    .column {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    #the-number {
+        font-size: 33vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cell {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        background-color:rgb(92, 102, 102);
+        color:cadetblue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .open {
+        background-color: rgb(157, 206, 223);
+        color: darkolivegreen;
+    }
+
+    #button {
+        width: 100%;
+        height: 3rem;
+        background-color: dodgerblue;
+        color: aliceblue;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    /* ↑ここにCSSを書く。 */
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="container">
+        <div id="number">
+            <p id="the-number">{{ theNumber }}</p>
+            <p id="button" @click="nextNumber">NEXT</p>
+        </div>
+        <div id="table">
+            <div class="column">
+                <p class="cell" v-for="(v, i) of [...Array(15)].map((_, v) => v)" :key="i" :class="{ open: opened[i] }">{{ v + 1 }}</p>
+            </div>
+            <div class="column">
+                <p class="cell" v-for="(v, i) of [...Array(15)].map((_, v) => v + 15)" :key="i" :class="{ open: opened[i + 15] }">{{ v + 1 }}</p>
+            </div>
+            <div class="column">
+                <p class="cell" v-for="(v, i) of [...Array(15)].map((_, v) => v + 30)" :key="i" :class="{ open: opened[i + 30] }">{{ v + 1 }}</p>
+            </div>
+            <div class="column">
+                <p class="cell" v-for="(v, i) of [...Array(15)].map((_, v) => v + 45)" :key="i" :class="{ open: opened[i + 45] }">{{ v + 1 }}</p>
+            </div>
+            <div class="column">
+                <p class="cell" v-for="(v, i) of [...Array(15)].map((_, v) => v + 60)" :key="i" :class="{ open: opened[i + 60] }">{{ v + 1 }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ↑ここに表示するものを書く。 -->
+  </div>
+  
+  <script>
+    const App = {
+      setup() {
+        const theNumber = Vue.ref("")
+        const opened = Vue.ref([...Array(75).map(() => false)])
+
+        const nextNumber = () => {
+            if (opened.value.every((v) => v)) return
+            let val
+            do {
+                val = Math.floor(Math.random() * 75)
+            } while (opened.value[val])
+            opened.value[val] = true
+            theNumber.value = Math.floor(val + 1)
+        }
+
+        return {
+            theNumber,
+            opened,
+            nextNumber,
+        }
+
+        // ↑ここにJavaScriptを書く。
+      },
+    } 
+
+    Vue.createApp(App).mount('#app')
+  </script>
+</body>
+</html>
