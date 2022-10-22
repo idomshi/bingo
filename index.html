@@ -8,21 +8,67 @@
     body, p {
         margin: 0;
     }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .cell {
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color:rgb(203, 213, 225);
+        color: rgb(100, 116, 139);
+        font-size: 1.25rem;
+    }
+
+    .open {
+        background-color: rgb(253, 224, 71);
+        color: rgb(161, 98, 7);
+    }
+
     #container {
+        box-sizing: border-box;
         width: 100%;
         height: 100vh;
+        padding: 0.5rem;
         display: flex;
-        flex-direction: row;
+        gap: 0.5rem;
     }
 
     #number {
         width: 62%;
         height: 100%;
+        flex-shrink: 0;
+        display: flex;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #the-number {
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 33vh;
+    }
+
+    #button {
+        width: 100%;
+        height: 3rem;
+        flex-shrink: 0;
+        background-color: rgb(96, 165, 250);
+        color: rgb(255, 255, 255);
+        border-radius: 0.25rem;
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
     }
 
     #table {
@@ -30,54 +76,10 @@
         width: 38%;
         height: 100%;
         display: flex;
-        flex-direction: row;
-        align-items: center;
         justify-content: space-around;
         background-color: rgb(144, 181, 194);
     }
     
-    .column {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-    }
-
-    #the-number {
-        font-size: 33vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .cell {
-        width: 1.5rem;
-        height: 1.5rem;
-        border-radius: 50%;
-        background-color:rgb(92, 102, 102);
-        color:cadetblue;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .open {
-        background-color: rgb(157, 206, 223);
-        color: darkolivegreen;
-    }
-
-    #button {
-        width: 100%;
-        height: 3rem;
-        background-color: dodgerblue;
-        color: aliceblue;
-        border-radius: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-    }
-
     /* ↑ここにCSSを書く。 */
   </style>
 </head>
@@ -118,10 +120,12 @@
 
         const nextNumber = () => {
             if (opened.value.every((v) => v)) return
+
             let val
             do {
                 val = Math.floor(Math.random() * 75)
             } while (opened.value[val])
+
             opened.value[val] = true
             theNumber.value = Math.floor(val + 1)
         }
